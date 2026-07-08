@@ -281,6 +281,12 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 @media(max-width:640px){
   header{padding-top:40px}
   .msg{max-width:95%}
+  .loop-track{min-width:0}
+  .node-sub{display:none}
+  .node-dot{width:32px;height:32px;font-size:11px}
+  .node-name{font-size:9px;letter-spacing:.08em;margin-top:8px}
+  .loop-track::before{top:16px}
+  .loop-shell{padding:20px 10px 16px}
 }
 </style>
 </head>
@@ -736,6 +742,12 @@ function stage(name) {
     else if (d.classList.contains("active")) { d.classList.remove("active"); d.classList.add("done"); }
   });
   document.getElementById("hudName").textContent = name.toUpperCase();
+  document.querySelectorAll(".node.active").forEach(n => {
+    const sc = n.closest(".loop-scroll");
+    if (sc && sc.scrollWidth > sc.clientWidth) {
+      sc.scrollTo({ left: n.offsetLeft - sc.clientWidth / 2 + n.offsetWidth / 2, behavior: "smooth" });
+    }
+  });
 }
 function setPass(n) {
   document.querySelectorAll(".pass-val").forEach(el => el.textContent = String(n));
