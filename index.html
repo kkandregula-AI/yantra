@@ -316,7 +316,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
       </div>
     </div>
     <div class="loop-meta">
-      <span>pass <span class="pass" id="passCount">—</span></span>
+      <span>pass <span class="pass pass-val">—</span></span>
       <span class="loop-return">when the model uses a tool, OBSERVE returns to INFER — that return edge is what makes it agentic</span>
     </div>
   </div>
@@ -393,6 +393,23 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
     <span class="cta-main">▶ &nbsp;Watch the agent run · 20 seconds, no key</span>
     <span class="cta-sub">it will solve “What is 12.5% of 8,40,000?” → ₹1,05,000 · with a real tool call</span>
   </button>
+  <div style="height:14px"></div>
+  <div class="loop-shell">
+    <div class="loop-scroll">
+      <div class="loop-track">
+        <div class="node" data-stage="assemble"><div class="node-dot">01</div><div class="node-name">Assemble</div><div class="node-sub">base prompt + skills + tools</div></div>
+        <div class="node" data-stage="infer"><div class="node-dot">02</div><div class="node-name">Infer</div><div class="node-sub">one model call</div></div>
+        <div class="node" data-stage="act"><div class="node-dot">03</div><div class="node-name">Act</div><div class="node-sub">harness executes the tool</div></div>
+        <div class="node" data-stage="observe"><div class="node-dot">04</div><div class="node-name">Observe</div><div class="node-sub">result returns as context</div></div>
+        <div class="node" data-stage="respond"><div class="node-dot">05</div><div class="node-name">Respond</div><div class="node-sub">loop exits, answer lands</div></div>
+      </div>
+    </div>
+    <div class="loop-meta">
+      <span>pass <span class="pass pass-val">—</span></span>
+      <span class="loop-return">the circuit from Section I — watching the run live</span>
+    </div>
+  </div>
+
   <div style="height:14px"></div>
   <div class="console">
     <div class="console-head">
@@ -721,7 +738,7 @@ function stage(name) {
   document.getElementById("hudName").textContent = name.toUpperCase();
 }
 function setPass(n) {
-  document.getElementById("passCount").textContent = String(n);
+  document.querySelectorAll(".pass-val").forEach(el => el.textContent = String(n));
   document.getElementById("hudPass").textContent = String(n);
   document.getElementById("mlPass").textContent = String(n);
 }
@@ -734,7 +751,7 @@ document.getElementById("hud").addEventListener("click", () => {
 });
 function loopReset() {
   document.querySelectorAll(".node,.hud-dot,.ml-node").forEach(n => n.classList.remove("active", "done"));
-  document.getElementById("passCount").textContent = "—";
+  document.querySelectorAll(".pass-val").forEach(el => el.textContent = "—");
   document.getElementById("hudPass").textContent = "—";
   document.getElementById("mlPass").textContent = "—";
 }
