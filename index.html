@@ -170,6 +170,11 @@ h2{font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:.14em;t
 .ctx-stat{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:10px;text-align:right}
 .ctx-stat b{color:var(--gold-dim);font-weight:500}
 
+/* ---------- guardrails strip (inside console) ---------- */
+.guard-strip{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.04em}
+.guard-strip b{color:var(--ok);font-weight:500;letter-spacing:.14em}
+.guard-strip span{white-space:nowrap}
+
 /* ---------- skill strip (inside console) ---------- */
 .skill-strip{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 14px;border-top:1px solid var(--line);background:var(--surface-2)}
 .ss-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--faint);flex:none}
@@ -393,6 +398,8 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
       <p class="card-desc">YANTRA loads a skill's full text the moment you toggle it. Production harnesses load only each skill's name + description, and fetch the body when the task matches — that's why the Anthropic skills you fetch above get truncated here. Context is a budget; spend it late.</p></div>
     <div class="card"><div class="card-top"><h3>mcp · external tools</h3></div>
       <p class="card-desc">Our calculator is hardcoded into the harness. MCP (Model Context Protocol) is the provision for tools the way SKILL.md files are for skills: a standard interface so any harness can discover and call third-party capabilities — email, databases, browsers — without custom wiring.</p></div>
+    <div class="card"><div class="card-top"><h3>responsible agents</h3></div>
+      <p class="card-desc">Autonomy without accountability is a liability. Responsible harnesses keep a human in command of consequential actions, label what is real versus generated, cap loops and budgets so agents cannot run away, and keep an audit trail. YANTRA practices this on every run — see the guardrails strip in the Lab Bench.</p></div>
     <div class="card"><div class="card-top"><h3>permissions &amp; verification</h3></div>
       <p class="card-desc">A calculator is harmless, so YANTRA auto-executes it. When tools can send emails or move money, the harness becomes a checkpoint: allow-lists, human confirmation for risky actions, and audit logs of every ACT. The loop stays the same — the gate between INFER and ACT grows teeth.</p></div>
   </div>
@@ -442,6 +449,13 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
     <div class="hint-row">
       <button class="hint demo" id="demoBtn">▶ run the demo · “What is 12.5% of 8,40,000?” → ₹1,05,000</button>
       <button class="hint demo" id="demoBtn2">↻ run again with skills toggled — the answer changes</button>
+    </div>
+    <div class="guard-strip" aria-label="Responsible AI guardrails active on every run">
+      <b>GUARDRAILS · EVERY RUN</b>
+      <span>⏹ loop capped at 5 passes</span>
+      <span>▤ every step logged above</span>
+      <span>◌ simulated turns labeled</span>
+      <span>⌂ nothing leaves your browser</span>
     </div>
   </div>
 
