@@ -625,9 +625,9 @@ function renderSkills() {
     '<p class="card-desc">A skill is just a file. Paste any SKILL.md \u2014 frontmatter with <b>name:</b> and <b>description:</b>, then instructions \u2014 and the harness registers it alongside the built-ins. Stored in this browser only.</p>' +
     '<div class="key-row"><input id="skillUrl" placeholder="https://raw.githubusercontent.com/\u2026/SKILL.md"><button class="btn" id="skillFetch" style="padding:9px 14px">FETCH</button></div>' +
     '<div class="hint-row" style="background:none;padding:10px 0 2px">' +
-    '<button class="hint" data-skillurl="https://raw.githubusercontent.com/anthropics/skills/main/skills/docx/SKILL.md">anthropic \u00b7 docx</button>' +
-    '<button class="hint" data-skillurl="https://raw.githubusercontent.com/anthropics/skills/main/skills/frontend-design/SKILL.md">anthropic \u00b7 frontend-design</button>' +
-    '<button class="hint" data-skillurl="https://raw.githubusercontent.com/anthropics/skills/main/skills/mcp-builder/SKILL.md">anthropic \u00b7 mcp-builder</button>' +
+    '<button class="hint" data-skillurl="https://cdn.jsdelivr.net/gh/anthropics/skills@main/skills/docx/SKILL.md">anthropic \u00b7 docx</button>' +
+    '<button class="hint" data-skillurl="https://cdn.jsdelivr.net/gh/anthropics/skills@main/skills/frontend-design/SKILL.md">anthropic \u00b7 frontend-design</button>' +
+    '<button class="hint" data-skillurl="https://cdn.jsdelivr.net/gh/anthropics/skills@main/skills/mcp-builder/SKILL.md">anthropic \u00b7 mcp-builder</button>' +
     '</div>' +
     '<textarea id="skillPaste" rows="6" placeholder="\u2026or paste a SKILL.md by hand:\n---\nname: my-skill\ndescription: Use for every response.\n---\n\n# My Skill\nAlways \u2026"></textarea>' +
     '<div class="card-foot"><span style="font-family:var(--mono);font-size:11px;color:var(--faint)" id="skillPasteMsg"></span>' +
@@ -705,26 +705,50 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* fetch a third-party SKILL.md over CORS and register it */
+/* fetch a third-party SKILL.md and register it — with mirror failover */
+function mirrorOf(url) {
+  let m = url.match(/^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)$/);
+  if (m) return "https://cdn.jsdelivr.net/gh/" + m[1] + "/" + m[2] + "@" + m[3] + "/" + m[4];
+  m = url.match(/^https:\/\/cdn\.jsdelivr\.net\/gh\/([^/]+)\/([^/]+)@([^/]+)\/(.+)$/);
+  if (m) return "https://raw.githubusercontent.com/" + m[1] + "/" + m[2] + "/" + m[3] + "/" + m[4];
+  return null;
+}
+function friendlyFetchError(e) {
+  const s = String(e.message || e);
+  if (s.includes("429")) return "rate-limited by host (HTTP 429)";
+  if (s.includes("404")) return "file not found (HTTP 404)";
+  if (/HTTP \d+/.test(s)) return s;
+  return "network/CORS blocked — host must allow browser requests";
+}
 async function fetchSkillFromUrl(url) {
   const msg = document.getElementById("skillPasteMsg");
   if (!url) { msg.textContent = "enter a raw SKILL.md URL"; msg.style.color = "var(--warn)"; return; }
-  msg.textContent = "fetching\u2026"; msg.style.color = "var(--faint)";
-  try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    let md = await r.text();
-    if (md.length > 6000) md = md.slice(0, 6000) + "\n\n[truncated by YANTRA \u2014 production harnesses load skill bodies progressively, not eagerly]";
-    const p = parseSkillMd(md);
-    if (!p) { msg.textContent = "no name: frontmatter found"; msg.style.color = "var(--warn)"; return; }
-    if (SKILLS.some(s => s.id === p.id)) { msg.textContent = "already registered"; msg.style.color = "var(--warn)"; return; }
-    SKILLS.push(p); state.enabled.add(p.id); persistExt();
-    renderSkills(); renderContext();
-    log("[harness] external skill " + p.id + " fetched over the network + loaded into context", "act");
-  } catch (e) {
-    msg.textContent = "fetch failed \u2014 " + e.message + " (host must allow CORS)"; msg.style.color = "var(--warn)";
-    log("[harness] skill fetch failed: " + e.message, "err");
+  const attempts = [url];
+  const alt = mirrorOf(url);
+  if (alt) attempts.push(alt);
+  let lastErr = null;
+  for (let i = 0; i < attempts.length; i++) {
+    msg.textContent = i === 0 ? "fetching\u2026" : "primary failed — retrying via mirror\u2026";
+    msg.style.color = "var(--faint)";
+    try {
+      const r = await fetch(attempts[i]);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      let md = await r.text();
+      if (md.length > 6000) md = md.slice(0, 6000) + "\n\n[truncated by YANTRA \u2014 production harnesses load skill bodies progressively, not eagerly]";
+      const p = parseSkillMd(md);
+      if (!p) { msg.textContent = "no name: frontmatter found"; msg.style.color = "var(--warn)"; return; }
+      if (SKILLS.some(s => s.id === p.id)) { msg.textContent = "already registered"; msg.style.color = "var(--warn)"; return; }
+      SKILLS.push(p); state.enabled.add(p.id); persistExt();
+      renderSkills(); renderContext();
+      log("[harness] external skill " + p.id + " fetched" + (i > 0 ? " via mirror" : "") + " + loaded into context", "act");
+      return;
+    } catch (e) {
+      lastErr = e;
+      log("[harness] fetch attempt " + (i + 1) + " failed: " + friendlyFetchError(e), "err");
+    }
   }
+  msg.textContent = "fetch failed — " + friendlyFetchError(lastErr) + (alt ? " (both primary and mirror)" : "");
+  msg.style.color = "var(--warn)";
 }
 
 /* ═══════════════ LOOP VISUAL ═══════════════ */
