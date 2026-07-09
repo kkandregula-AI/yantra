@@ -20,8 +20,8 @@
   --gold:#D4AF6A;
   --gold-dim:#8A7444;
   --text:#E8E6E1;
-  --muted:#8A8780;
-  --faint:#5A5852;
+  --muted:#ABA8A0;
+  --faint:#807D76;
   --ok:#7FB98A;
   --warn:#C98A6B;
   --mono:'DM Mono',ui-monospace,monospace;
@@ -74,10 +74,10 @@ section{padding:44px 0 8px}
 .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px}
 .sec-glyph{font-family:var(--mono);color:var(--gold);font-size:13px;letter-spacing:.2em}
 h2{font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:.14em;text-transform:uppercase}
-.sec-note{color:var(--muted);font-size:14.5px;margin:10px 0 22px;max-width:640px}
+.sec-note{color:#C6C3BB;font-size:14.5px;margin:10px 0 22px;max-width:640px}
 .sec-note b{color:var(--text);font-weight:600}
-.wild{font-family:var(--mono);font-size:11.5px;line-height:1.8;color:var(--faint);margin:-14px 0 24px;max-width:640px}
-.wild b{color:var(--gold-dim);font-weight:500;letter-spacing:.08em}
+.wild{font-family:var(--mono);font-size:11.5px;line-height:1.8;color:var(--muted);margin:-14px 0 24px;max-width:640px}
+.wild b{color:var(--gold);font-weight:500;letter-spacing:.08em}
 
 /* ---------- THE LOOP (signature) ---------- */
 .loop-shell{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 18px 20px;position:relative;overflow:hidden}
@@ -169,6 +169,13 @@ h2{font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:.14em;t
 .context-box .skill-in{color:var(--text)}
 .ctx-stat{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:10px;text-align:right}
 .ctx-stat b{color:var(--gold-dim);font-weight:500}
+
+/* ---------- skill strip (inside console) ---------- */
+.skill-strip{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 14px;border-top:1px solid var(--line);background:var(--surface-2)}
+.ss-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--faint);flex:none}
+.ss-pill{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;cursor:pointer;border:1px solid var(--line);border-radius:99px;padding:6px 13px;background:none;color:var(--muted);transition:all .2s}
+.ss-pill.on{color:var(--ink);background:var(--gold);border-color:var(--gold)}
+.ss-pill:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* ---------- console header + mode pill ---------- */
 .console-head{
@@ -302,7 +309,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <header class="wrap">
   <div class="brand-mark">Krishnamurthy Kandregula Innovation Lab</div>
-  <h1>YANTRA <span class="telugu">యంత్రం</span></h1>
+  <h1>YANTRA</h1>
   <p class="tagline">The Agent Anatomy Lab. An agent is a <em>model</em> in a <em>harness</em>, carrying <em>skills</em> and <em>tools</em>, running a loop. This page opens the machine and lets you watch each part work.</p>
 </header>
 
@@ -431,6 +438,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
     <div class="feed" id="feed">
       <div class="evt">[yantra] harness idle · tap ▶ run the demo · skills in Section II change the answer’s shape</div>
     </div>
+    <div class="skill-strip" id="skillStrip"></div>
     <div class="hint-row">
       <button class="hint demo" id="demoBtn">▶ run the demo · “What is 12.5% of 8,40,000?” → ₹1,05,000</button>
       <button class="hint demo" id="demoBtn2">↻ run again with skills toggled — the answer changes</button>
@@ -454,7 +462,6 @@ const SKILLS = [
   {
     id: "sutra-of-brevity",
     name: "sutra-of-brevity",
-    telugu: "సూత్రం",
     desc: "Compresses every answer to exactly three sentences. The clearest demo that a skill is pure instruction — toggle it and the agent's entire voice changes.",
     md: `---
 name: sutra-of-brevity
@@ -470,27 +477,24 @@ If a tool result is involved, weave the number into
 one of the three sentences naturally.`
   },
   {
-    id: "telugu-voice",
-    name: "telugu-voice",
-    telugu: "తెలుగు",
-    desc: "Bilingual delivery: answers in English, then a one-line Telugu synthesis. Shows skills composing — stack it with brevity and both apply.",
+    id: "plain-words",
+    name: "plain-words",
+    desc: "Ends every answer with a one-line plain-English summary anyone can understand. Shows skills composing \u2014 stack it with brevity and both apply.",
     md: `---
-name: telugu-voice
-description: Use for every response. Adds a Telugu synthesis line.
+name: plain-words
+description: Use for every response. Adds a plain-language summary line.
 ---
 
-# Telugu Voice
+# Plain Words
 
-After your English answer, add one final line:
-a single-sentence synthesis of the answer written
-in Telugu script, prefixed with "సారాంశం: ".
-Keep the Telugu natural and conversational,
-not a literal word-for-word translation.`
+After your main answer, add one final line
+prefixed with "In plain words: " \u2014 a single
+sentence any newcomer could understand,
+free of jargon. Never skip it.`
   },
   {
     id: "socratic-mirror",
     name: "socratic-mirror",
-    telugu: "దర్పణం",
     desc: "Forces self-critique: the agent ends every answer by naming its own weakest assumption. Skills can shape epistemics, not just format.",
     md: `---
 name: socratic-mirror
@@ -604,7 +608,7 @@ function renderSkills() {
     const card = document.createElement("div");
     card.className = "card" + (on ? " on" : "");
     card.innerHTML =
-      '<div class="card-top"><h3>' + s.name + '<span class="telugu">' + s.telugu + "</span></h3>" +
+      '<div class="card-top"><h3>' + s.name + (s.external ? '<span class="telugu">EXT</span>' : "") + "</h3>" +
       '<button class="toggle" role="switch" aria-checked="' + on + '" aria-label="Load skill ' + s.name + '" data-skill="' + s.id + '"></button></div>' +
       '<p class="card-desc">' + s.desc + "</p>" +
       '<div class="card-foot"><button class="reveal-btn" data-reveal="md-' + s.id + '">view SKILL.md ▾</button>' +
@@ -629,6 +633,22 @@ function renderSkills() {
     '<div class="card-foot"><span style="font-family:var(--mono);font-size:11px;color:var(--faint)" id="skillPasteMsg"></span>' +
     '<button class="btn" id="skillRegister" style="padding:9px 18px">REGISTER</button></div>';
   rack.appendChild(loader);
+  renderSkillStrip();
+}
+
+function renderSkillStrip() {
+  const strip = document.getElementById("skillStrip");
+  if (!strip) return;
+  strip.innerHTML = '<span class="ss-label">SKILLS FOR THE NEXT RUN:</span>';
+  for (const s of SKILLS) {
+    const b = document.createElement("button");
+    b.className = "ss-pill" + (state.enabled.has(s.id) ? " on" : "");
+    b.dataset.stogl = s.id;
+    b.setAttribute("role", "switch");
+    b.setAttribute("aria-checked", state.enabled.has(s.id));
+    b.textContent = s.name;
+    strip.appendChild(b);
+  }
 }
 
 document.addEventListener("click", (e) => {
@@ -639,6 +659,15 @@ document.addEventListener("click", (e) => {
     renderSkills();
     renderContext();
     log("[harness] skill " + id + (state.enabled.has(id) ? " → loaded into context" : " → unloaded"), "");
+    return;
+  }
+  const spill = e.target.closest("[data-stogl]");
+  if (spill) {
+    const id = spill.dataset.stogl;
+    if (state.enabled.has(id)) state.enabled.delete(id); else state.enabled.add(id);
+    renderSkills();
+    renderContext();
+    log("[harness] skill " + id + (state.enabled.has(id) ? " → loaded into context" : " → unloaded"));
     return;
   }
   const unload = e.target.closest("[data-unload]");
@@ -773,8 +802,8 @@ function demoAnswer(val) {
   } else {
     text = "12.5% of 8,40,000 is " + n + ".\n\nNote what just happened: the model never did this arithmetic. On pass 1 it emitted a tool call; the harness executed the calculator and returned the exact result as an observation; on pass 2 the model shaped this answer around it.";
   }
-  if (state.enabled.has("telugu-voice")) {
-    text += "\n\n\u0C38\u0C3E\u0C30\u0C3E\u0C02\u0C36\u0C02: 8,40,000\u0C32\u0C4B 12.5% \u0C05\u0C02\u0C1F\u0C47 \u20B9" + n + " \u2014 \u0C08 \u0C32\u0C46\u0C15\u0C4D\u0C15 \u0C2E\u0C4B\u0C21\u0C32\u0C4D \u0C15\u0C3E\u0C26\u0C41, \u0C39\u0C3E\u0C30\u0C4D\u0C28\u0C46\u0C38\u0C4D \u0C1A\u0C47\u0C38\u0C3F\u0C02\u0C26\u0C3F.";
+  if (state.enabled.has("plain-words")) {
+    text += "\n\nIn plain words: the model asked for the math, the harness ran the calculator, and the exact answer \u2014 " + n + " \u2014 came back as an observation.";
   }
   if (state.enabled.has("socratic-mirror")) {
     text += "\n\n\u2300 mirror: this reply is scripted \u2014 a live run may phrase things differently, though the calculator's number would be identical.";
@@ -819,8 +848,7 @@ async function demoRun() {
 document.getElementById("demoBtn").addEventListener("click", demoRun);
 document.getElementById("demoBtn2").addEventListener("click", () => {
   if (state.enabled.size === 0) {
-    log("[yantra] no skills loaded yet — toggle one in Section II, then run again to see the answer change");
-    document.getElementById("skills").scrollIntoView({ behavior: "smooth", block: "start" });
+    log("[yantra] no skills loaded yet — tap a skill pill just below the log, then run again to see the answer change");
     return;
   }
   demoRun();
@@ -841,7 +869,7 @@ document.getElementById("heroDemo").addEventListener("click", () => {
     x.strokeStyle = "#D4AF6A"; x.lineWidth = 10;
     x.beginPath(); x.arc(256, 256, 150, 0, Math.PI * 2); x.stroke();
     x.fillStyle = "#D4AF6A"; x.font = "600 170px Georgia,serif";
-    x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("య", 256, 268);
+    x.textAlign = "center"; x.textBaseline = "middle"; x.fillText("Y", 256, 268);
     const icon = c.toDataURL("image/png");
     const manifest = {
       name: "YANTRA · Agent Anatomy Lab", short_name: "YANTRA",
