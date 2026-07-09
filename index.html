@@ -308,7 +308,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <!-- ═══════════ 1 · THE LOOP ═══════════ -->
 <section class="wrap" id="loop">
-  <div class="sec-head"><span class="sec-glyph">I</span><h2>The Harness Loop</h2><span class="sec-badge">FREE</span></div>
+  <div class="sec-head"><span class="sec-glyph">I</span><h2>The Harness Loop</h2></div>
   <p class="sec-note">The harness is not intelligence — it is <b>plumbing with discipline</b>. It assembles context, calls the model, executes what the model asks, feeds the result back, and repeats until the work is done. Read the anatomy below; at the end of the page, the Lab Bench lets you run this circuit for real.</p>
   <p class="wild"><b>IN THE WILD:</b> Claude Code · Claude Cowork · Google Antigravity · Cursor · Gemini CLI · OpenAI Codex CLI · and YANTRA's ~40-line loop below — same anatomy, different scale.</p>
   <div class="loop-shell">
@@ -330,7 +330,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <!-- ═══════════ 2 · SKILLS ═══════════ -->
 <section class="wrap" id="skills">
-  <div class="sec-head"><span class="sec-glyph">II</span><h2>Skills</h2><span class="sec-badge">FREE</span></div>
+  <div class="sec-head"><span class="sec-glyph">II</span><h2>Skills</h2></div>
   <p class="sec-note">A skill is <b>instructions loaded on demand</b> — a SKILL.md file the harness folds into context when needed. Toggle one and watch the Context Inspector change. That is the whole trick: no fine-tuning, no magic. Text in, behavior out.</p>
   <p class="wild"><b>IN THE WILD:</b> Anthropic's docx / pptx / pdf / xlsx skills (fetchable below) · a company's brand-guidelines skill · any SKILL.md you write yourself.</p>
   <div class="rack" id="skillRack"></div>
@@ -338,7 +338,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <!-- ═══════════ 3 · TOOLS ═══════════ -->
 <section class="wrap" id="tools">
-  <div class="sec-head"><span class="sec-glyph">III</span><h2>Tools</h2><span class="sec-badge">FREE</span></div>
+  <div class="sec-head"><span class="sec-glyph">III</span><h2>Tools</h2></div>
   <p class="sec-note">The distinction that matters most: a <b>skill is knowledge</b> — text loaded into context that changes how the model thinks and speaks. A <b>tool is a capability</b> — code the harness executes on the model's behalf. A skill never runs; a tool never persuades. When the model wants a tool, it asks; the harness acts; the result returns as an observation — that round-trip is the ACT → OBSERVE edge in the loop above.</p>
   <p class="wild"><b>IN THE WILD:</b> bash · file editing · web search · code execution · MCP servers for Gmail, GitHub, Slack, databases · and this page's humble calculator.</p>
   <div class="rack">
@@ -368,7 +368,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <!-- ═══════════ 4 · CONTEXT INSPECTOR ═══════════ -->
 <section class="wrap" id="context">
-  <div class="sec-head"><span class="sec-glyph">IV</span><h2>Context Inspector</h2><span class="sec-badge">FREE</span></div>
+  <div class="sec-head"><span class="sec-glyph">IV</span><h2>Context Inspector</h2></div>
   <p class="sec-note">The exact system prompt the harness will send on the next model call. <b>Nothing is hidden.</b> Toggle skills above and watch the assembly change live — this is what "loading a skill" physically is.</p>
   <div class="context-box" id="ctxBox"></div>
   <div class="ctx-stat">assembled: <b id="ctxChars">0</b> chars · <b id="ctxSkills">0</b> skills loaded · <b>1</b> tool armed</div>
@@ -377,7 +377,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <!-- ═══ V · THE REST OF THE STACK ═══ -->
 <section class="wrap" id="stack">
-  <div class="sec-head"><span class="sec-glyph">V</span><h2>The Rest of the Stack</h2><span class="sec-badge">FREE</span></div>
+  <div class="sec-head"><span class="sec-glyph">V</span><h2>The Rest of the Stack</h2></div>
   <p class="sec-note">YANTRA is the minimal agent — deliberately. Production harnesses add four more layers. Same philosophy, more discipline.</p>
   <div class="rack">
     <div class="card"><div class="card-top"><h3>memory &amp; state</h3></div>
@@ -393,10 +393,10 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 
 <!-- ═══ VI · THE LAB BENCH ═══ -->
 <section class="wrap" id="run">
-  <div class="sec-head"><span class="sec-glyph">VI</span><h2>The Lab Bench</h2><span class="sec-badge mixed">FREE DEMO · BYOK LIVE</span></div>
-  <p class="sec-note">Theory over — now run it. The strip inside the console mirrors the loop from Section I: watch the passes tick as the agent works. Skills you toggled above are already loaded; the sample prompts below enable them for you.</p>
+  <div class="sec-head"><span class="sec-glyph">VI</span><h2>The Lab Bench</h2></div>
+  <p class="sec-note">Theory over — now run it. This bench runs a <b>scripted demo</b>: the harness, context assembly and calculator execute for real; the model turns are simulated and labeled. Toggle skills in Section II and run it again — the answer genuinely changes shape.</p>
   <button class="cta bench-cta" id="heroDemo">
-    <span class="cta-main">▶ &nbsp;Watch the agent run · 20 seconds, no key</span>
+    <span class="cta-main">▶ &nbsp;Watch the agent run · 20 seconds</span>
     <span class="cta-sub">it will solve “What is 12.5% of 8,40,000?” → ₹1,05,000 · with a real tool call</span>
   </button>
   <div style="height:14px"></div>
@@ -420,7 +420,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
   <div class="console">
     <div class="console-head">
       <span class="console-title">YANTRA · CONSOLE</span>
-      <button class="mode-pill demo" id="modePill" title="Tap to manage your key">◌ DEMO SHELL — no key</button>
+      <span class="mode-pill demo" style="cursor:default">SCRIPTED · EDUCATIONAL</span>
     </div>
     <div class="mini-loop" aria-hidden="true">
       <span class="ml-pass">pass <b id="mlPass">—</b></span>
@@ -429,35 +429,14 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
       </div>
     </div>
     <div class="feed" id="feed">
-      <div class="evt">[yantra] harness idle · tap ▶ demo run to watch the loop · skills in Section II change how the agent answers</div>
+      <div class="evt">[yantra] harness idle · tap ▶ run the demo · skills in Section II change the answer’s shape</div>
     </div>
     <div class="hint-row">
-      <span class="row-tag free">FREE · NO KEY</span>
-      <button class="hint demo" id="demoBtn">▶ demo · “12.5% of 8,40,000?” → ₹1,05,000</button>
-    </div>
-    <div class="hint-row" style="padding-top:0">
-      <span class="row-tag byok">LIVE · NEEDS KEY</span>
-      <button class="hint" data-q="What is 12.5% of 840000?">12.5% of 8,40,000</button>
-      <button class="hint" data-q="Explain how transformer models work." data-skill="sutra-of-brevity">sutra · 3-sentence answer</button>
-      <button class="hint" data-q="What does the harness do in an agentic system?" data-skill="telugu-voice">telugu · bilingual answer</button>
-      <button class="hint" data-q="Should an early-stage startup build AI agents into its product?" data-skill="socratic-mirror">mirror · self-critique</button>
-      <button class="hint" data-q="If I invest 25000 per month for 18 months, how much is the principal? Then summarise why SIPs work.">tool + skill combo</button>
-    </div>
-    <div class="composer">
-      <input id="userInput" type="text" placeholder="Ask the agent anything…" autocomplete="off" aria-label="Message to the agent">
-      <button class="btn" id="sendBtn">RUN</button>
+      <button class="hint demo" id="demoBtn">▶ run the demo · “What is 12.5% of 8,40,000?” → ₹1,05,000</button>
+      <button class="hint demo" id="demoBtn2">↻ run again with skills toggled — the answer changes</button>
     </div>
   </div>
 
-  <div style="height:14px"></div>
-  <div class="key-box" id="keyBox">
-    <p><b style="color:var(--gold)">Bring your own key — only for live runs.</b> The ▶ demo, skills, and context inspector all work without one. Save your Anthropic API key here and <b>the same message box above goes live</b>: the console pill turns green, and RUN sends real requests to claude-sonnet-4-6. The key stays in this browser's localStorage and is sent only to api.anthropic.com.</p>
-    <div class="key-row">
-      <input id="keyInput" type="password" placeholder="sk-ant-…" aria-label="Anthropic API key">
-      <button class="btn" id="keySave">SAVE</button>
-    </div>
-    <span class="key-state" id="keyState">no key stored — deterministic shell active</span>
-  </div>
 </section>
 
 <footer>
@@ -576,7 +555,6 @@ function runCalculator(expr) {
 /* ═══════════════ STATE ═══════════════ */
 const state = {
   enabled: new Set(),
-  key: localStorage.getItem("yantra_key") || "",
   messages: [],   // full conversation, including tool_use / tool_result blocks
   running: false
 };
@@ -696,17 +674,6 @@ document.addEventListener("click", (e) => {
     const open = panel.classList.toggle("open");
     rev.textContent = rev.textContent.replace(open ? "▾" : "▴", open ? "▴" : "▾");
   }
-  const hint = e.target.closest(".hint");
-  if (hint && hint.dataset.q) {
-    if (hint.dataset.skill && !state.enabled.has(hint.dataset.skill)) {
-      state.enabled.add(hint.dataset.skill);
-      renderSkills();
-      renderContext();
-      log("[harness] skill " + hint.dataset.skill + " \u2192 loaded into context (enabled by sample prompt)");
-    }
-    document.getElementById("userInput").value = hint.dataset.q;
-    document.getElementById("userInput").focus();
-  }
 });
 
 /* fetch a third-party SKILL.md over CORS and register it */
@@ -793,85 +760,6 @@ function bubble(text, who, tag) {
 
 /* ═══════════════ THE HARNESS ═══════════════
    This function IS the harness. ~40 lines. That is the lesson. */
-async function runAgent(userText) {
-  state.running = true;
-  document.getElementById("sendBtn").disabled = true;
-  loopReset();
-  hudShow(true);
-  bubble(userText, "user");
-  state.messages.push({ role: "user", content: userText });
-
-  const MAX_PASSES = 5;
-  try {
-    for (let pass = 1; pass <= MAX_PASSES; pass++) {
-      setPass(pass);
-
-      /* 01 · ASSEMBLE */
-      stage("assemble"); await sleep(300);
-      const system = assembleSystem();
-      log("[harness] pass " + pass + " · context assembled · " + state.enabled.size + " skills · 1 tool · " + system.length + " chars");
-
-      /* 02 · INFER */
-      stage("infer");
-      log("[model] calling claude-sonnet-4-6 …", "model");
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": state.key,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true"
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1000,
-          system: system,
-          tools: TOOLS,
-          messages: state.messages
-        })
-      });
-      if (!res.ok) {
-        const errBody = await res.text();
-        throw new Error("API " + res.status + " — " + errBody.slice(0, 160));
-      }
-      const data = await res.json();
-      log("[model] stop_reason=" + data.stop_reason, "model");
-      state.messages.push({ role: "assistant", content: data.content });
-
-      const toolUse = (data.content || []).find(b => b.type === "tool_use");
-
-      if (toolUse && data.stop_reason === "tool_use") {
-        /* 03 · ACT — the harness, not the model, executes */
-        stage("act"); await sleep(300);
-        log("[harness] executing " + toolUse.name + "(" + JSON.stringify(toolUse.input) + ")", "act");
-        const out = runCalculator(toolUse.input.expression);
-        /* 04 · OBSERVE — result returns to the model as context */
-        stage("observe"); await sleep(300);
-        log("[harness] observation → " + JSON.stringify(out) + " · returning to INFER", "act");
-        state.messages.push({
-          role: "user",
-          content: [{ type: "tool_result", tool_use_id: toolUse.id, content: JSON.stringify(out) }]
-        });
-        continue; // ← the return edge. This one line is what makes it an agent.
-      }
-
-      /* 05 · RESPOND */
-      stage("respond");
-      const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n").trim();
-      bubble(text || "(empty response)", "agent");
-      log("[harness] loop exit · " + pass + " pass" + (pass > 1 ? "es" : "") + " · done");
-      break;
-    }
-  } catch (err) {
-    log("[harness] " + err.message, "err");
-    log("[harness] loop aborted · state preserved", "err");
-    state.messages.pop(); // drop the failed turn's dangling entry if any
-  } finally {
-    state.running = false;
-    document.getElementById("sendBtn").disabled = false;
-    setTimeout(() => hudShow(false), 2500);
-  }
-}
 
 /* ═══════════════ DEMO RUN — no key required ═══════════════
    Real vs Simulated: the harness, context assembly, and the
@@ -897,7 +785,6 @@ function demoAnswer(val) {
 async function demoRun() {
   if (state.running) return;
   state.running = true;
-  document.getElementById("sendBtn").disabled = true;
   loopReset();
   hudShow(true);
 
@@ -927,62 +814,23 @@ async function demoRun() {
   log("[harness] loop exit · 2 passes · done \u2014 add your key to run this live");
 
   state.running = false;
-  document.getElementById("sendBtn").disabled = false;
   setTimeout(() => hudShow(false), 2500);
 }
 document.getElementById("demoBtn").addEventListener("click", demoRun);
+document.getElementById("demoBtn2").addEventListener("click", () => {
+  if (state.enabled.size === 0) {
+    log("[yantra] no skills loaded yet — toggle one in Section II, then run again to see the answer change");
+    document.getElementById("skills").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  demoRun();
+});
 document.getElementById("heroDemo").addEventListener("click", () => {
   document.querySelector(".console").scrollIntoView({ behavior: "smooth", block: "start" });
   setTimeout(demoRun, 400);
 });
 
-/* ═══════════════ SEND / KEY ═══════════════ */
-function trySend() {
-  if (state.running) return;
-  const inp = document.getElementById("userInput");
-  const text = inp.value.trim();
-  if (!text) return;
-  if (!state.key) {
-    log("[yantra] no API key stored — try the \u25B6 demo run above to watch the loop, or add your key below for live inference.", "err");
-    document.getElementById("keyBox").scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
-  }
-  inp.value = "";
-  runAgent(text);
-}
-document.getElementById("sendBtn").addEventListener("click", trySend);
-document.getElementById("userInput").addEventListener("keydown", e => { if (e.key === "Enter") trySend(); });
 
-function renderKeyState() {
-  const st = document.getElementById("keyState");
-  const pill = document.getElementById("modePill");
-  const inp = document.getElementById("userInput");
-  if (state.key) {
-    st.textContent = "key stored locally · live inference armed"; st.classList.add("ok");
-    pill.textContent = "\u25CF LIVE \u2014 key saved"; pill.classList.remove("demo"); pill.classList.add("live");
-    inp.placeholder = "Ask the agent anything \u2014 runs live\u2026";
-  } else {
-    st.textContent = "no key stored \u2014 demo shell active"; st.classList.remove("ok");
-    pill.textContent = "\u25CC DEMO SHELL \u2014 no key"; pill.classList.remove("live"); pill.classList.add("demo");
-    inp.placeholder = "Tap \u25B6 demo run \u2014 or add a key below to prompt live\u2026";
-  }
-}
-document.getElementById("modePill").addEventListener("click", () => {
-  document.getElementById("keyBox").scrollIntoView({ behavior: "smooth", block: "center" });
-  document.getElementById("keyInput").focus({ preventScroll: true });
-});
-document.getElementById("keySave").addEventListener("click", () => {
-  const v = document.getElementById("keyInput").value.trim();
-  if (v) { state.key = v; localStorage.setItem("yantra_key", v); }
-  else { state.key = ""; localStorage.removeItem("yantra_key"); }
-  document.getElementById("keyInput").value = "";
-  renderKeyState();
-  log("[harness] API key " + (state.key ? "stored (localStorage only) \u2014 console is LIVE, type your prompt above" : "cleared \u2014 back to demo shell"));
-  if (state.key) {
-    document.getElementById("userInput").scrollIntoView({ behavior: "smooth", block: "center" });
-    document.getElementById("userInput").focus({ preventScroll: true });
-  }
-});
 
 /* ═══════════════ PWA SHELL ═══════════════ */
 (function pwa() {
@@ -1014,7 +862,6 @@ document.getElementById("keySave").addEventListener("click", () => {
 /* ═══════════════ INIT ═══════════════ */
 renderSkills();
 renderContext();
-renderKeyState();
 </script>
 </body>
 </html>
