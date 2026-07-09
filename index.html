@@ -347,7 +347,7 @@ footer{margin-top:70px;padding:30px 0 46px;border-top:1px solid var(--line);text
 <section class="wrap" id="tools">
   <div class="sec-head"><span class="sec-glyph">III</span><h2>Tools</h2></div>
   <p class="sec-note">The distinction that matters most: a <b>skill is knowledge</b> — text loaded into context that changes how the model thinks and speaks. A <b>tool is a capability</b> — code the harness executes on the model's behalf. A skill never runs; a tool never persuades. When the model wants a tool, it asks; the harness acts; the result returns as an observation — that round-trip is the ACT → OBSERVE edge in the loop above.</p>
-  <p class="wild"><b>IN THE WILD:</b> bash · file editing · web search · code execution · MCP servers for Gmail, GitHub, Slack, databases · and this page's humble calculator.</p>
+  <p class="wild"><b>IN THE WILD:</b> bash · file editing · web search · code execution · MCP servers for Gmail, GitHub, Slack, databases · and this page's humble calculator. (No tool loader here on purpose — tools are executable code, and loading arbitrary code from strangers is how security holes are born. MCP, in Section V, is the safe provision for this.)</p>
   <div class="rack">
     <div class="card on">
       <div class="card-top">
@@ -805,6 +805,12 @@ function demoAnswer(val) {
   if (state.enabled.has("plain-words")) {
     text += "\n\nIn plain words: the model asked for the math, the harness ran the calculator, and the exact answer \u2014 " + n + " \u2014 came back as an observation.";
   }
+  const builtins = ["sutra-of-brevity", "plain-words", "socratic-mirror"];
+  for (const s of SKILLS) {
+    if (s.external && state.enabled.has(s.id)) {
+      text += "\n\n\u29c9 " + s.id + " is in context (" + s.md.length.toLocaleString() + " chars). A live model would follow its instructions; this scripted demo can only confirm it was loaded \u2014 check the Context Inspector to see its full text in the prompt.";
+    }
+  }
   if (state.enabled.has("socratic-mirror")) {
     text += "\n\n\u2300 mirror: this reply is scripted \u2014 a live run may phrase things differently, though the calculator's number would be identical.";
   }
@@ -824,7 +830,8 @@ async function demoRun() {
   setPass(1);
   stage("assemble"); await sleep(700);
   const system = assembleSystem();
-  log("[harness] pass 1 · context assembled · " + state.enabled.size + " skills · 1 tool · " + system.length + " chars");
+  const loaded = [...state.enabled].join(", ") || "none";
+  log("[harness] pass 1 · context assembled · skills: " + loaded + " · 1 tool · " + system.length + " chars");
   stage("infer"); await sleep(900);
   log("[demo\u00B7model] simulated claude-sonnet-4-6 · stop_reason=tool_use", "model");
   stage("act"); await sleep(700);
